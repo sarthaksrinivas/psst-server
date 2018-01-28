@@ -13,8 +13,13 @@ app.use(bodyParser.json())
 // Configuring the database
 var dbConfig = require('./config/database.config.js');
 var mongoose = require('mongoose');
-mongoose.connect(dbConfig.url, {
-    useMongoClient: true
+mongoose.connect(dbConfig.url, (err, res) => {
+    if (err) {
+        console.log('ERROR connecting to: ' + dbConfig.url + '. ' + err);
+    } else {
+        console.log('Succeeded connected to: ' + dbConfig.url);
+    }
+    // useMongoClient: true
 });
 
 mongoose.connection.on('error', function () {
