@@ -50,13 +50,13 @@ exports.update = function (req, res) {
 
         if (typeof req.body.title != 'undefined') {
             event.title = req.body.title;
-        } else if (typeof req.body.description != 'undefined') {
+        } if (typeof req.body.description != 'undefined') {
             event.description = req.body.description;
-        } else if (typeof req.body.votes != 'undefined') {
+        } if (typeof req.body.votes != 'undefined') {
             event.votes = req.body.votes;
-        } else if (typeof req.body.lattitude != 'undefined') {
+        } if (typeof req.body.lattitude != 'undefined') {
             event.lattitude = req.body.lattitude;
-        } else if (typeof req.body.longitude != 'undefined') {
+        } if (typeof req.body.longitude != 'undefined') {
             event.longitude = req.body.longitude;
         }
 
