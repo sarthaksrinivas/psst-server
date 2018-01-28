@@ -3,7 +3,7 @@ var Event = require('../models/event.model.js');
 exports.create = function (req, res) {
     // Create and Save a new Event
 
-    var event = new Event({ title: req.body.title || "Untitled Event", description: req.body.description, lattitude: req.body.lattitude, longitude: req.body.longitude, votes: req.body.votes });
+    var event = new Event({ title: req.body.title || "Untitled Event", description: req.body.description, lattitude: req.body.lattitude, longitude: req.body.longitude, votes: req.body.votes, userId: req.body.userId });
 
     event.save(function (err, data) {
         console.log(data);
