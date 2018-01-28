@@ -3,9 +3,6 @@ var Event = require('../models/event.model.js');
 exports.create = function (req, res) {
     // Create and Save a new Event
 
-    console.log("request: " + JSON.stringify(req.body));
-    console.log("response: " + JSON.stringify(res.params));
-
     var event = new Event({ title: req.body.title || "Untitled Event", description: req.body.description, lattitude: req.body.lattitude, longitude: req.body.longitude, votes: req.body.votes });
 
     event.save(function (err, data) {
@@ -22,9 +19,6 @@ exports.create = function (req, res) {
 exports.findAll = function (req, res) {
     // Retrieve and return all events from the database.
 
-    console.log("request: " + JSON.stringify(req.body));
-    console.log("response: " + JSON.stringify(res.params));
-
     Event.find(function (err, events) {
         if (err) {
             res.status(500).send({ message: "Some error ocuured while retrieving events." });
@@ -36,9 +30,6 @@ exports.findAll = function (req, res) {
 
 exports.findOne = function (req, res) {
     // Find a single event with a eventId
-
-    console.log("request: " + JSON.stringify(req.body));
-    console.log("response: " + JSON.stringify(res.params));
 
     Event.findById(req.params.eventId, function (err, data) {
         if (err) {
@@ -52,19 +43,22 @@ exports.findOne = function (req, res) {
 exports.update = function (req, res) {
     // Update a event identified by the eventId in the request
 
-    console.log("request: " + JSON.stringify(req.body));
-    console.log("response: " + JSON.stringify(res.params));
-
     Event.findById(req.params.eventId, function (err, event) {
         if (err) {
             res.status(500).send({ message: "Could not find a event with id " + req.params.eventId });
         }
 
-        // event.title = req.body.title;
-        event.content = req.body.content;
-        event.votes = req.body.votes;
-        event.lattitude = req.body.lattitude;
-        event.longitude = req.body.longitude;
+        if (typeof req.body.title != 'undefined') {
+            event.title = req.body.title;
+        } else if (typeof req.body.description != 'undefined') {
+            event.description = req.body.description;
+        } else if (typeof req.body.votes != 'undefined') {
+            event.votes = req.body.votes;
+        } else if (typeof req.body.lattitude != 'undefined') {
+            event.lattitude = req.body.lattitude;
+        } else if (typeof req.body.longitude != 'undefined') {
+            event.longitude = req.body.longitude;
+        }
 
         event.save(function (err, data) {
             if (err) {
